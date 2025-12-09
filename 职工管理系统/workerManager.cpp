@@ -134,6 +134,7 @@ int WorkerManager::get_EmpNum(){
     }
     return num;
 }
+//初始化职工
 void WorkerManager::init_Emp(){
     ifstream ifs;
     ifs.open(FILENAME,ios::in);
@@ -157,6 +158,59 @@ void WorkerManager::init_Emp(){
         this->m_EmpArray[index]=worker;
         index++;
     }
+}
+//显示职工
+void WorkerManager::Show_Emp(){
+    if(this->m_FileIsEmpty){
+        cout<<"文件不存在"<<endl;
+    }
+    else{
+        for(int i=0;i<this->m_EmpNum;i++){
+            //利用多态调用接口
+            this->m_EmpArray[i]->showInfo();
+        }
+    }
+    system("pause");
+    system("cls");
+}
+//删除职工
+void WorkerManager::Del_Emp(){
+    if(this->m_FileIsEmpty){
+        cout<<"文件不存在"<<endl;
+    }
+    else{
+        cout<<"请输入想要删除的职工编号： "<<endl;
+        int id=0;
+        cin>>id;
+       int index=this->IsExist(id);
+       if(index!=-1){
+        //数据前移
+        for(int j=index;j<this->m_EmpNum-1;j++){
+            this->m_EmpArray[j]=this->m_EmpArray[j+1];
+        }
+        this->m_EmpNum--;
+        //同步更新到文件中
+        this->save();
+        cout<<"删除成功"<<endl;
+       }
+       else{
+        cout<<"未找到该职工，删除失败"<<endl;
+       }
+    }
+    system("pause");
+    system("cls");
+}
+//判断职工是否存在
+int WorkerManager::IsExist(int id){
+    int index=-1;
+    for(int i=0;i<m_EmpNum;i++){
+        if(this->m_EmpArray[i]->m_Id==id){
+            //找到职工
+            index=i;
+            break;
+        }
+    }
+    return;
 }
 //退出系统
 void WorkerManager::exitsystem(){
