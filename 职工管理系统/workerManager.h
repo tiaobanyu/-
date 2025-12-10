@@ -35,6 +35,12 @@ class WorkerManager{
     int IsExist(int id);
     //修改职工
     void Mod_Emp();
+    //查找职工
+    void Find_Emp();
+    //排序职工
+    void Sort_Emp();
+    //清空数据
+    void Clean_File();
     //职工数组指针
     Worker **m_EmpArray;    
 };
