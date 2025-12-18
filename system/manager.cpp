@@ -6,7 +6,7 @@ Manager:: Manager(int id,string name, int did,int salary){
         this->m_salary=salary;
     }
      void Manager::showInfo(){
-        cout<<"   职工编号： "<<this->m_Id;
+        cout<<"职工编号： "<<this->m_Id;
         cout<<"   职工姓名： "<<this->m_name;
         cout<<"   岗位： "<<this->getDeptName();
         cout<<"   薪资： "<<this->m_salary;
