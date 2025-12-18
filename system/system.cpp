@@ -1,10 +1,9 @@
 #include <iostream>
 using namespace std;
 #include "workerManager.h"
-#include "workerManager.cpp"
 #include <windows.h>
  int main(){
- SetConsoleOutputCP(936);  // 设置控制台编码为GBK
+ SetConsoleOutputCP(65001);  // 设置控制台编码为GBK
     // 后续代码
     WorkerManager wm;
     wm.showMenu();

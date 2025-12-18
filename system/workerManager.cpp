@@ -1,4 +1,5 @@
 #include "workerManager.h" 
+#include <cstdlib>
 WorkerManager::WorkerManager(){
     //1.文件不存在
     ifstream ifs;
@@ -40,7 +41,7 @@ WorkerManager::~WorkerManager(){
     }
 }
 void WorkerManager::showMenu(){;
-    cout<<"**********欢迎使用职工管理系统！*********"<<endl;
+    cout<<"**********欢迎使用职工管理系统！*****"<<endl;
     cout<<"************0.退出管理系统**********"<<endl;
     cout<<"************1.增加职工信息**********"<<endl;
     cout<<"************2.显示职工信息**********"<<endl;
@@ -114,6 +115,7 @@ void WorkerManager::Add_Emp(){
     system("pause");
     system("cls");
 };
+//保存文件
 void WorkerManager::save(){
     ofstream ofs;
     ofs.open(FILENAME,ios::out);
@@ -168,6 +170,8 @@ void WorkerManager::init_Emp(){
 void WorkerManager::Show_Emp(){
     if(this->m_FileIsEmpty){
         cout<<"文件不存在"<<endl;
+        system("pause");
+        system("cls");
     }
     else{
         for(int i=0;i<this->m_EmpNum;i++){
@@ -333,32 +337,32 @@ void WorkerManager::Sort_Emp(){
         cout<<"2.按职工号降序的方式排序"<<endl;
         int select=0;
         cin>>select;
-        if(select==1){
-            for(int i=0;i<m_EmpNum-1;i++){
-                for(int j=0;j<m_EmpNum-1-i;j++){
-                    if(m_EmpArray[i]->m_Id>m_EmpArray[i+1]->m_Id){
-                    Worker *temp=m_EmpArray[i+1];
-                    m_EmpArray[i+1]=m_EmpArray[i];
-                    m_EmpArray[i]= temp;}
-                    
+       for(int i=0;i<m_EmpNum;i++){
+            int minOrMax=i;
+            for(int j=i+1;j<m_EmpNum;j++){
+                if(select==1){
+                    if(this->m_EmpArray[minOrMax]->m_Id>this->m_EmpArray[j]->m_Id){
+                        minOrMax=j;
+                    }
+                }
+                else{
+                    if(this->m_EmpArray[minOrMax]->m_Id<this->m_EmpArray[j]->m_Id){
+                        minOrMax=j;
+                    }
                 }
             }
-        }
-        else if(select==2){
-             for(int i=0;i<m_EmpNum-1;i++){
-                for(int j=0;j<m_EmpNum-1-i;j++){
-                    if(m_EmpArray[i]->m_Id<m_EmpArray[i+1]->m_Id){
-                    Worker *temp=m_EmpArray[i];
-                    m_EmpArray[i]=m_EmpArray[i+1];
-                    m_EmpArray[i+1]= temp;
-                }
-                }
+            if(i!=minOrMax){
+                Worker * temp=this->m_EmpArray[i];
+                this->m_EmpArray[i]=this->m_EmpArray[minOrMax];
+                this->m_EmpArray[minOrMax]=temp;
             }
         }
-        cout<<"排序成功，排序后的结果为： "<<endl;
-            this->save();
-            this->Show_Emp();
-    }
+        cout<<"排序成功，排序后结果为： "<<endl;
+        this->Show_Emp(); 
+        //保存文件
+        this->save();
+    
+}
 }
 //清空文件
 void WorkerManager::Clean_File(){
@@ -382,9 +386,10 @@ void WorkerManager::Clean_File(){
               this->m_FileIsEmpty=true;
         }
         cout<<"清空成功"<<endl;
+    }
         system("pause");
         system("cls");
-    }
+    
 }
 //退出系统
 void WorkerManager::exitsystem(){
